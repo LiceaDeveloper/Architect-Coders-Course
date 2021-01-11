@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -15,23 +14,20 @@ import com.liceadev.mymovies.databinding.ActivityMainBinding
 import com.liceadev.mymovies.model.Movie
 import com.liceadev.mymovies.model.MovieClient
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mMoviesAdapter: MoviesAdapter
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+    private val DEFAULT_REGION = "US"
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            requestPopularMovies(isGranted)
-            val message = if (isGranted) {
-                "Permission Granted"
-            } else {
-                "Permission Denied"
-            }
-            toast(message)
+            doRequestPopularMovies(isGranted)
         }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,47 +35,43 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
+        requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         mMoviesAdapter = MoviesAdapter { movie ->
             navigateTo(movie)
         }
-
-        with(binding) {
-            rvMovies.adapter = mMoviesAdapter
-        }
-
-
-        requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        binding.rvMovies.adapter = mMoviesAdapter
     }
 
     private fun navigateTo(movie: Movie) {
         startActivity(DetailActivity.getIntent(this, movie))
     }
 
-    fun toast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun requestPopularMovies(isLocationGranted: Boolean) {
-        if (isLocationGranted) {
-            fusedLocationProviderClient.lastLocation.addOnCompleteListener {
-                doRequestPopularMovies(getRegionFromLocation(it.result))
-            }
-        }
-    }
-
-    private fun doRequestPopularMovies(regionFromLocation: String) {
+    private fun doRequestPopularMovies(isLocationGranted: Boolean) {
         lifecycleScope.launch {
+            val region = getRegion(isLocationGranted)
             val movies = MovieClient.service
-                .getPopularMovies("ac3bca4dbf2d39b2f3ea35e968f18234", regionFromLocation)
+                .getPopularMovies(getString(R.string.api_key), region)
             mMoviesAdapter.movies = movies.results
         }
     }
 
-    private fun getRegionFromLocation(location: Location): String {
+    private fun getRegionFromLocation(location: Location?): String {
         val geocoder = Geocoder(this)
-        val result = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        return result.firstOrNull()?.countryCode ?: "US"
+        val fromLocation = location?.let {
+            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+        }
+        return fromLocation?.firstOrNull()?.countryCode ?: DEFAULT_REGION
     }
+
+    @SuppressLint("MissingPermission")
+    private suspend fun getRegion(isLocationGranted: Boolean): String =
+        suspendCancellableCoroutine { continuation ->
+            if (isLocationGranted) {
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener {
+                    continuation.resume(getRegionFromLocation(it.result))
+                }
+            } else {
+                continuation.resume(DEFAULT_REGION)
+            }
+        }
 }
