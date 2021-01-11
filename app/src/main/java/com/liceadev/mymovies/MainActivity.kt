@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mMoviesAdapter: MoviesAdapter
+   private lateinit var mMoviesAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateTo(movie: Movie) {
-        startActivity(DetailActivity.getIntent(this, movie.title))
+        startActivity(DetailActivity.getIntent(this, movie))
     }
 
     private fun loadMovies() {
