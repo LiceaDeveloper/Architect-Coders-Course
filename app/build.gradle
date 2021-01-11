@@ -51,6 +51,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //endregion services
 
+    //region images
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    //endregion images
+
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
 

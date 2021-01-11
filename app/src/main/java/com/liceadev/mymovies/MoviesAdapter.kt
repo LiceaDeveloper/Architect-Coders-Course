@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.liceadev.mymovies.databinding.ItemMovieBinding
+import com.liceadev.mymovies.extensions.loadMovie
 import com.liceadev.mymovies.model.Movie
 import kotlin.properties.Delegates
 
@@ -41,7 +42,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
         fun bind(movie: Movie) {
             binding.tvMovieName.text = movie.title
-//            binding.ivMovie.loadMovie(movie.backdropPath)
+            binding.ivMovie.loadMovie("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
         }
     }
 }
