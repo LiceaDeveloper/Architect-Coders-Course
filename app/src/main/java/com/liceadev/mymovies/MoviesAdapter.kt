@@ -9,7 +9,8 @@ import com.liceadev.mymovies.extensions.loadMovie
 import com.liceadev.mymovies.model.Movie
 import kotlin.properties.Delegates
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+class MoviesAdapter(private val movieClick: (Movie) -> Unit) :
+    RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     var movies: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
@@ -33,6 +34,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
+        holder.itemView.setOnClickListener { movieClick.invoke(movie) }
     }
 
     override fun getItemCount(): Int = movies.size
@@ -43,6 +45,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
         fun bind(movie: Movie) {
             binding.tvMovieName.text = movie.title
             binding.ivMovie.loadMovie("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+
         }
     }
 }
