@@ -2,7 +2,10 @@ package com.liceadev.mymovies
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.liceadev.mymovies.databinding.ActivityMainBinding
+import com.liceadev.mymovies.model.MovieClient
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val mMoviesAdapter = MoviesAdapter()
@@ -12,10 +15,17 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-         mMoviesAdapter.movies = listOf("1")
-
         with(binding) {
             rvMovies.adapter = mMoviesAdapter
+        }
+        loadMovies()
+    }
+
+    private fun loadMovies(){
+        lifecycleScope.launch {
+            val movies = MovieClient.service
+                .getPopularMovies("ac3bca4dbf2d39b2f3ea35e968f18234")
+            mMoviesAdapter.movies = movies.results
         }
     }
 }

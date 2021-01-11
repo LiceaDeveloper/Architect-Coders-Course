@@ -10,10 +10,10 @@ import kotlin.properties.Delegates
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
-    var movies: List<String> by Delegates.observable(emptyList()) { _, old, new ->
+    var movies: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                old[oldItemPosition] == new[newItemPosition]
+                old[oldItemPosition].id == new[newItemPosition].id
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
                 old[oldItemPosition] == new[newItemPosition]
@@ -39,8 +39,9 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
     class MovieViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(string: String) {
-            binding.tvMovieName.text = string
+        fun bind(movie: Movie) {
+            binding.tvMovieName.text = movie.title
+//            binding.ivMovie.loadMovie(movie.backdropPath)
         }
     }
 }
