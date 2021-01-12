@@ -1,4 +1,4 @@
-package com.liceadev.mymovies
+package com.liceadev.mymovies.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -45,7 +45,6 @@ class MoviesAdapter(private val movieClick: (Movie) -> Unit) :
         fun bind(movie: Movie) {
             binding.tvMovieName.text = movie.title
             binding.ivMovie.loadMovie("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
-
         }
     }
 }

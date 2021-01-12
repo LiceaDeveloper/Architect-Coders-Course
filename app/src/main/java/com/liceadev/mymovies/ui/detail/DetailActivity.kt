@@ -1,4 +1,4 @@
-package com.liceadev.mymovies
+package com.liceadev.mymovies.ui.detail
 
 import android.content.Context
 import android.content.Intent

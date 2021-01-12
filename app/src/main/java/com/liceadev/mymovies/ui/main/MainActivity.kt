@@ -1,4 +1,4 @@
-package com.liceadev.mymovies
+package com.liceadev.mymovies.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.liceadev.mymovies.R
 import com.liceadev.mymovies.databinding.ActivityMainBinding
 import com.liceadev.mymovies.model.Movie
 import com.liceadev.mymovies.model.MovieClient
+import com.liceadev.mymovies.ui.detail.DetailActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
