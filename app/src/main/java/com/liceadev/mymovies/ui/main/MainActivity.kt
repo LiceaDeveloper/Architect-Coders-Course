@@ -6,20 +6,19 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.liceadev.mymovies.R
 import com.liceadev.mymovies.databinding.ActivityMainBinding
 import com.liceadev.mymovies.model.Movie
 import com.liceadev.mymovies.model.MovieClient
+import com.liceadev.mymovies.ui.common.CoroutineScopeActivity
 import com.liceadev.mymovies.ui.detail.DetailActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : CoroutineScopeActivity() {
 
     private lateinit var mMoviesAdapter: MoviesAdapter
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun doRequestPopularMovies(isLocationGranted: Boolean) {
-        lifecycleScope.launch {
+        launch {
             val region = getRegion(isLocationGranted)
             val movies = MovieClient.service
                 .getPopularMovies(getString(R.string.api_key), region)
