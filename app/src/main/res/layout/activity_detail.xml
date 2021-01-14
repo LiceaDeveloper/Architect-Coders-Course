@@ -58,7 +58,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="Lorem ipsum" />
 
-            <TextView
+            <com.liceadev.mymovies.ui.detail.MovieDetailInfoView
                 android:id="@+id/tvInfoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

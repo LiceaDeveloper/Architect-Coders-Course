@@ -21,7 +21,6 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -31,31 +30,9 @@ class DetailActivity : AppCompatActivity() {
         if (movie != null) {
             val background = movie.backdropPath ?: movie.posterPath
             binding.ivMovieDetail.loadMovie("https://image.tmdb.org/t/p/w185/${background}")
-
             binding.tbMovieDetail.title = movie.title
             binding.tvSummaryDetail.text = movie.overview
-            bindDetailInfo(binding.tvInfoDetail, movie)
-        }
-
-    }
-
-    private fun bindDetailInfo(tvInfoDetail: TextView, movie: Movie) {
-        tvInfoDetail.text = buildSpannedString {
-
-            bold { append("Original language: ") }
-            appendLine(movie.originalLanguage)
-
-            bold { append("Original title: ") }
-            appendLine(movie.originalTitle)
-
-            bold { append("Release date: ") }
-            appendLine(movie.releaseDate)
-
-            bold { append("Popularity: ") }
-            appendLine(movie.popularity.toString())
-
-            bold { append("Vote Average: ") }
-            append(movie.voteAverage.toString())
+            binding.tvInfoDetail.setMovie(movie)
         }
     }
 }
