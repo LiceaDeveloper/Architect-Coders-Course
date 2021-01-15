@@ -2,26 +2,23 @@ package com.liceadev.mymovies.ui.common
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.liceadev.mymovies.model.Scope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
-abstract class CoroutineScopeActivity : AppCompatActivity(), CoroutineScope {
-    private lateinit var job: Job
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+abstract class CoroutineScopeActivity : AppCompatActivity(), Scope by Scope.ScopeImpl() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        job = SupervisorJob()
+        initScope()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel()
+        cancelScope()
     }
 }

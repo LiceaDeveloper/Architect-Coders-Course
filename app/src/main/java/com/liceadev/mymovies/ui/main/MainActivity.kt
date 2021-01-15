@@ -1,28 +1,47 @@
 package com.liceadev.mymovies.ui.main
 
 import android.os.Bundle
+import android.view.View
 import com.liceadev.mymovies.databinding.ActivityMainBinding
+import com.liceadev.mymovies.model.Movie
 import com.liceadev.mymovies.model.MoviesRepository
 import com.liceadev.mymovies.ui.common.CoroutineScopeActivity
 import com.liceadev.mymovies.ui.detail.DetailActivity
-import kotlinx.coroutines.launch
 
-class MainActivity : CoroutineScopeActivity() {
-
-    private val moviesRepository: MoviesRepository by lazy { MoviesRepository(this) }
+class MainActivity : CoroutineScopeActivity(), MainPresenter.View {
+    private val presenter by lazy {   MainPresenter(MoviesRepository(this))}
+    private lateinit var binding: ActivityMainBinding
 
     private var mMoviesAdapter: MoviesAdapter = MoviesAdapter { movie ->
-        startActivity(DetailActivity.getIntent(this, movie))
+        presenter.onMovieClick(movie)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        presenter.onCreate(this)
         binding.rvMovies.adapter = mMoviesAdapter
+    }
 
-        launch {
-            mMoviesAdapter.movies = moviesRepository.findPopularMoviesByRegion().results
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
+    override fun showProgress() {
+        binding.progress.visibility = View.VISIBLE
+    }
+
+    override fun loadMovies(movies: List<Movie>) {
+        mMoviesAdapter.movies = movies
+    }
+
+    override fun hideProgress() {
+        binding.progress.visibility = View.GONE
+    }
+
+    override fun navigateToMovie(movie: Movie) {
+        startActivity(DetailActivity.getIntent(this, movie))
     }
 }
