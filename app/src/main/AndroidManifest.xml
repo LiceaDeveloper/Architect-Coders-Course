@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.liceadev.mymovies">
+    package="com.liceadev.architectcoders">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -11,11 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyMovies">
-        <activity android:name=".ui.detail.DetailActivity"
-            android:theme="@style/Theme.MyMovies.NoActionBar"
-            android:parentActivityName=".ui.main.MainActivity"/>
-        <activity android:name=".ui.main.MainActivity">
+        android:theme="@style/Theme.MyPhotos">
+        <activity android:name="com.liceadev.architectcoders.ui.detail.DetailActivity"
+            android:theme="@style/Theme.MyPhotos.NoActionBar"
+            android:parentActivityName="com.liceadev.architectcoders.ui.main.MainActivity"/>
+        <activity android:name="com.liceadev.architectcoders.ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

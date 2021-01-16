@@ -1,4 +1,4 @@
-package com.liceadev.mymovies.model
+package com.liceadev.architectcoders.model
 
 import android.annotation.SuppressLint
 import android.app.Activity

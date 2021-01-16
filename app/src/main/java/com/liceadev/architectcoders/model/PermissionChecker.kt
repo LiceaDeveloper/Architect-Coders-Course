@@ -1,4 +1,4 @@
-package com.liceadev.mymovies.model
+package com.liceadev.architectcoders.model
 
 import android.app.Activity
 import com.karumi.dexter.Dexter

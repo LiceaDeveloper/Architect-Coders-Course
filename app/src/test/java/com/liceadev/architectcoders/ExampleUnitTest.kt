@@ -1,4 +1,4 @@
-package com.liceadev.mymovies
+package com.liceadev.architectcoders
 
 import org.junit.Test
 

@@ -1,16 +1,10 @@
-package com.liceadev.mymovies.ui.common
+package com.liceadev.architectcoders.ui.common
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.liceadev.mymovies.model.Scope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlin.coroutines.CoroutineContext
+import com.liceadev.architectcoders.model.Scope
 
 abstract class CoroutineScopeActivity : AppCompatActivity(), Scope by Scope.ScopeImpl() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

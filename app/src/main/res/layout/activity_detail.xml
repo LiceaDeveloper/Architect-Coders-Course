@@ -19,7 +19,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/ivMovieDetail"
+                android:id="@+id/ivPhotoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -29,11 +29,11 @@
                 android:contentDescription="@null" />
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tbMovieDetail"
+                android:id="@+id/tbPhotoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:titleTextColor="@color/white"
-                app:title="Movie name" />
+                app:title="Photo name" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -58,7 +58,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="Lorem ipsum" />
 
-            <com.liceadev.mymovies.ui.detail.MovieDetailInfoView
+            <com.liceadev.architectcoders.ui.detail.PhotoDetailInfoView
                 android:id="@+id/tvInfoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

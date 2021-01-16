@@ -1,4 +1,4 @@
-package com.liceadev.mymovies.model
+package com.liceadev.architectcoders.model
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
