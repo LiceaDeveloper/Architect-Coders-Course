@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.model.User
 
 class PhotoDetailInfoView @JvmOverloads constructor(
@@ -16,16 +17,16 @@ class PhotoDetailInfoView @JvmOverloads constructor(
     fun setPhoto(user: User) = with(user) {
         text = buildSpannedString {
             bold { append("Name: ") }
-            appendln(name?:"")
+            appendLine(name ?: context.getString(R.string.detail_not_data))
 
             bold { append("UserName: ") }
-            appendln(username?:"")
+            appendLine(username ?: context.getString(R.string.detail_not_data))
 
             bold { append("Portfolio Url: ") }
-            appendln(portfolioUrl?:"")
+            appendLine(portfolioUrl ?: context.getString(R.string.detail_not_data))
 
             bold { append("Location: ") }
-            appendln(location)
+            appendLine(location ?: context.getString(R.string.detail_not_data))
         }
     }
 }

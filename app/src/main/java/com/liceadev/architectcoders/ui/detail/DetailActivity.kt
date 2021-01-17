@@ -4,20 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.ActivityDetailBinding
+import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.extensions.loadPhoto
 import com.liceadev.architectcoders.model.Photo
 
-class DetailActivity : AppCompatActivity(), DetailPresenter.View {
+class DetailActivity : AppCompatActivity(){
+    private lateinit var viewModel: DetailViewModel
     private lateinit var binding: ActivityDetailBinding
-    private val presenter by lazy { DetailPresenter() }
 
     companion object {
-        const val EXTRA_MOVIE = "DetailActivity:photo"
+        const val EXTRA_PHOTO = "DetailActivity:photo"
         fun getIntent(context: Context, photo: Photo): Intent {
             val i = Intent(context, DetailActivity::class.java)
-            i.putExtra(EXTRA_MOVIE, photo)
+            i.putExtra(EXTRA_PHOTO, photo)
             return i
         }
     }
@@ -26,16 +28,16 @@ class DetailActivity : AppCompatActivity(), DetailPresenter.View {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter.onCreate(this, intent.getParcelableExtra(EXTRA_MOVIE))
+
+        val photo: Photo = intent.getParcelableExtra(EXTRA_PHOTO)
+            ?: throw (IllegalStateException("Photo not found"))
+
+        viewModel = getViewModel { DetailViewModel(photo) }
+        viewModel.model.observe(this, Observer(::updateUi))
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDestroy()
-    }
-
-
-    override fun showPhoto(photo: Photo) = with(photo) {
+    private fun updateUi(model: DetailViewModel.UiModel) {
+        val photo = model.photo
         val background = photo.urls?.full ?: ""
         binding.ivPhotoDetail.loadPhoto(background)
         binding.tbPhotoDetail.title =
@@ -45,7 +47,7 @@ class DetailActivity : AppCompatActivity(), DetailPresenter.View {
                 ""
             }
         val likes = photo.likes ?: 0
-        binding.tvLikes.text = getString(R.string.detail_likes, likes)
+        binding.tvLikes.text = getString(R.string.detail_likes_count, likes)
         binding.tvInfoDetail.setPhoto(photo.user)
     }
 }

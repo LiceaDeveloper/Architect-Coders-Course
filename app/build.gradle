@@ -48,7 +48,11 @@ dependencies {
 
 
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    //region jetPack
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    //endregion jetPack
 
     //region services
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MyPhotos</string>
-    <string name="detail_likes">Likes: %1d</string>
+
+    <string name="detail_likes_count">Likes: %1d</string>
+    <string name="detail_user">User</string>
+    <string name="detail_not_data">- - - -</string>
 </resources>

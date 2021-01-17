@@ -7,7 +7,7 @@ import android.location.Location
 
 class CountryRepository(private val activity: Activity) {
     companion object {
-        private const val DEFAULT_COUNTRY = "USA"
+        private const val DEFAULT_COUNTRY = "Mexico"
     }
 
     private val locationDataSources: LocationDataSources = PlayServicesLocation(activity)

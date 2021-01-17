@@ -2,46 +2,36 @@ package com.liceadev.architectcoders.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.liceadev.architectcoders.databinding.ActivityMainBinding
+import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.model.PhotosRepository
-import com.liceadev.architectcoders.model.Photo
 import com.liceadev.architectcoders.ui.common.CoroutineScopeActivity
 import com.liceadev.architectcoders.ui.detail.DetailActivity
+import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
 
-class MainActivity : CoroutineScopeActivity(), MainPresenter.View {
-    private val presenter by lazy {   MainPresenter(PhotosRepository(this))}
+class MainActivity : CoroutineScopeActivity() {
     private lateinit var binding: ActivityMainBinding
-
-    private var mPhotosAdapter: PhotosAdapter = PhotosAdapter { photo ->
-        presenter.onPhotoClick(photo)
-    }
+    private lateinit var viewModel: MainViewModel
+    private lateinit var adapter: PhotosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter.onCreate(this)
-        binding.rvPhotos.adapter = mPhotosAdapter
+
+        viewModel = getViewModel { MainViewModel(PhotosRepository(this)) }
+        viewModel.model.observe(this, Observer(::updateUi))
+
+        adapter = PhotosAdapter(viewModel::onPhotoClick)
+        binding.rvPhotos.adapter = adapter
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDestroy()
-    }
-
-    override fun showProgress() {
-        binding.progress.visibility = View.VISIBLE
-    }
-
-    override fun loadPhotos(photos: List<Photo>) {
-        mPhotosAdapter.photos = photos
-    }
-
-    override fun hideProgress() {
-        binding.progress.visibility = View.GONE
-    }
-
-    override fun navigateToPhoto(photo: Photo) {
-        startActivity(DetailActivity.getIntent(this, photo))
+    private fun updateUi(model: UiModel) {
+        binding.progress.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
+        when (model) {
+            is UiModel.Content -> adapter.photos = model.photos
+            is UiModel.Navigation -> startActivity(DetailActivity.getIntent(this, model.photo))
+        }
     }
 }
