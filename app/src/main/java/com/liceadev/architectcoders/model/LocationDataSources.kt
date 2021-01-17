@@ -2,6 +2,7 @@ package com.liceadev.architectcoders.model
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Application
 import android.location.Location
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -11,9 +12,9 @@ interface LocationDataSources {
     suspend fun findLastLocation(): Location?
 }
 
-class PlayServicesLocation(activity: Activity) : LocationDataSources {
+class PlayServicesLocation(application: Application) : LocationDataSources {
     private val fusedLocationProviderClient =
-        LocationServices.getFusedLocationProviderClient(activity)
+        LocationServices.getFusedLocationProviderClient(application)
 
     @SuppressLint("MissingPermission")
     override suspend fun findLastLocation(): Location? =

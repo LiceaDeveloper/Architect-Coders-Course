@@ -22,6 +22,7 @@ class MainViewModel(private val photosRepository: PhotosRepository) : ViewModel(
         object Loading : UiModel()
         class Content(val photos: List<Photo>) : UiModel()
         class Navigation(val photo: Photo) : UiModel()
+        object RequestLocationPermission : UiModel()
     }
 
     init {
@@ -29,6 +30,10 @@ class MainViewModel(private val photosRepository: PhotosRepository) : ViewModel(
     }
 
     private fun refresh() {
+        _model.value = UiModel.RequestLocationPermission
+    }
+
+    fun onPermissionRequested(){
         launch {
             _model.value = UiModel.Loading
             _model.value = UiModel.Content(photosRepository.findPopularPhotosByRegion().results)
