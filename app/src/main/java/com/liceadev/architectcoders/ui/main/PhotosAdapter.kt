@@ -43,8 +43,13 @@ class PhotosAdapter(private val photoClick: (Photo) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: Photo) {
-            binding.tvPhotoName.text = photo.id
-            binding.ivPhoto.loadPhoto(photo.urls?.thumb?:"")
+            binding.tvPhotoName.text =
+                if (photo.description != null || photo.altDescription != null) {
+                    photo.description ?: photo.altDescription
+                } else {
+                    ""
+                }
+            binding.ivPhoto.loadPhoto(photo.urls?.thumb ?: "")
         }
     }
 }

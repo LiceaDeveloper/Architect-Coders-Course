@@ -21,10 +21,10 @@ class PhotoDetailInfoView @JvmOverloads constructor(
             bold { append("UserName: ") }
             appendln(username?:"")
 
-            bold { append("portfolio Url: ") }
+            bold { append("Portfolio Url: ") }
             appendln(portfolioUrl?:"")
 
-            bold { append("location: ") }
+            bold { append("Location: ") }
             appendln(location)
         }
     }

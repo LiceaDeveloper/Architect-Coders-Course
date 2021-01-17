@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.ActivityDetailBinding
 import com.liceadev.architectcoders.extensions.loadPhoto
 import com.liceadev.architectcoders.model.Photo
@@ -37,8 +38,14 @@ class DetailActivity : AppCompatActivity(), DetailPresenter.View {
     override fun showPhoto(photo: Photo) = with(photo) {
         val background = photo.urls?.full ?: ""
         binding.ivPhotoDetail.loadPhoto(background)
-        binding.tbPhotoDetail.title = photo.id
-        binding.tvSummaryDetail.text = photo.description?: ""
+        binding.tbPhotoDetail.title =
+            if (photo.description != null || photo.altDescription != null) {
+                photo.description ?: photo.altDescription
+            } else {
+                ""
+            }
+        val likes = photo.likes ?: 0
+        binding.tvLikes.text = getString(R.string.detail_likes, likes)
         binding.tvInfoDetail.setPhoto(photo.user)
     }
 }

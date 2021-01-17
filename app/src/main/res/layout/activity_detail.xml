@@ -22,18 +22,18 @@
                 android:id="@+id/ivPhotoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                tools:src="@mipmap/ic_launcher"
-                android:contentDescription="@null" />
+                tools:src="@mipmap/ic_launcher" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tbPhotoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:titleTextColor="@color/white"
-                app:title="Photo name" />
+                app:title="Photo name"
+                app:titleTextColor="@color/white" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -51,19 +51,34 @@
             android:transitionGroup="true">
 
             <TextView
-                android:id="@+id/tvSummaryDetail"
+                android:id="@+id/tvLikes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="Lorem ipsum" />
+                android:text="Likes"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/design_default_color_secondary_variant" />
+
+            <TextView
+                android:id="@+id/tvUserInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="User"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
 
             <com.liceadev.architectcoders.ui.detail.PhotoDetailInfoView
                 android:id="@+id/tvInfoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
                 android:lineSpacingMultiplier="1.5"
+                android:padding="16dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="Lorem ipsum" />
 
