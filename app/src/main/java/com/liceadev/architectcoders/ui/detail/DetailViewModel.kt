@@ -3,7 +3,7 @@ package com.liceadev.architectcoders.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.liceadev.architectcoders.model.Photo
+import com.liceadev.architectcoders.model.server.Photo
 
 class DetailViewModel(private val photo: Photo) : ViewModel() {
 

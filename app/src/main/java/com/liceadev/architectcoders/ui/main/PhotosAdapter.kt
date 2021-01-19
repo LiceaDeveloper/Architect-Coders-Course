@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.liceadev.architectcoders.databinding.ItemPhotoBinding
 import com.liceadev.architectcoders.extensions.loadPhoto
-import com.liceadev.architectcoders.model.Photo
+import com.liceadev.architectcoders.model.server.Photo
 import kotlin.properties.Delegates
 
 class PhotosAdapter(private val photoClick: (Photo) -> Unit) :

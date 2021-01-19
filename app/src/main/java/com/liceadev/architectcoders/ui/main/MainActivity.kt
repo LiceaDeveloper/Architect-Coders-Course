@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.liceadev.architectcoders.databinding.ActivityMainBinding
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.model.PermissionRequester
-import com.liceadev.architectcoders.model.PhotosRepository
+import com.liceadev.architectcoders.model.server.PhotosRepository
 import com.liceadev.architectcoders.ui.common.CoroutineScopeActivity
 import com.liceadev.architectcoders.ui.detail.DetailActivity
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel

@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.model.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

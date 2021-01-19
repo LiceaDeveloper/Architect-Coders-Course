@@ -3,8 +3,8 @@ package com.liceadev.architectcoders.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.liceadev.architectcoders.model.PhotosRepository
-import com.liceadev.architectcoders.model.Photo
+import com.liceadev.architectcoders.model.server.PhotosRepository
+import com.liceadev.architectcoders.model.server.Photo
 import com.liceadev.architectcoders.model.Scope
 import kotlinx.coroutines.launch
 

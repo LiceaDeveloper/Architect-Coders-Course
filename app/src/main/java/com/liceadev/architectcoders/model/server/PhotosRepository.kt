@@ -1,7 +1,8 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.model.server
 
 import android.app.Application
 import com.liceadev.architectcoders.R
+import com.liceadev.architectcoders.model.CountryRepository
 
 class PhotosRepository(application: Application) {
     private val apiKey = application.getString(R.string.unsplash_api_key)
@@ -9,8 +10,7 @@ class PhotosRepository(application: Application) {
 
     suspend fun findPopularPhotosByRegion(): PhotosResponse {
         val country = regionRepository.findLastCountry()
-        return PhotoClient
-            .SERVICE
+        return PhotoClient.SERVICE
             .getPopularPhotos(apiKey, country, 30)
     }
 }

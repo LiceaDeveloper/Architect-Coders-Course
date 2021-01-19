@@ -9,7 +9,7 @@ import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.ActivityDetailBinding
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.extensions.loadPhoto
-import com.liceadev.architectcoders.model.Photo
+import com.liceadev.architectcoders.model.server.Photo
 
 class DetailActivity : AppCompatActivity(){
     private lateinit var viewModel: DetailViewModel

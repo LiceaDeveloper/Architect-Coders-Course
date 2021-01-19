@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.model.server
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,5 +10,5 @@ object PhotoClient {
         .build()
 
 
-    val SERVICE: PhotoServices = retrofit.create(PhotoServices::class.java)
+    val service: PhotoServices = retrofit.create(PhotoServices::class.java)
 }
