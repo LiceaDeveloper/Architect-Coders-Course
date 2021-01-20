@@ -2,31 +2,40 @@ package com.liceadev.architectcoders.ui.main
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.liceadev.architectcoders.databinding.ActivityMainBinding
+import com.liceadev.architectcoders.databinding.FragmentMainBinding
+import com.liceadev.architectcoders.extensions.app
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.model.PermissionRequester
 import com.liceadev.architectcoders.model.server.PhotosRepository
-import com.liceadev.architectcoders.ui.detail.DetailFragment
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
-import com.liceadev.architectcoders.extensions.app
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainFragment : Fragment() {
+    private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: PhotosAdapter
 
-    private val permissionRequester = PermissionRequester(this, ACCESS_COARSE_LOCATION)
+    private val permissionRequester by lazy {
+        PermissionRequester(requireActivity(), ACCESS_COARSE_LOCATION)
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentMainBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-        viewModel = getViewModel { MainViewModel(PhotosRepository(app)) }
-        viewModel.model.observe(this, Observer(::updateUi))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = getViewModel { MainViewModel(PhotosRepository(requireContext().app)) }
+        viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
 
         adapter = PhotosAdapter(viewModel::onPhotoClick)
         binding.rvPhotos.adapter = adapter
@@ -41,5 +50,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.onPermissionRequested()
             }
         }
+
     }
 }
