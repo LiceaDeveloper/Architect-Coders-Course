@@ -9,7 +9,7 @@ import com.liceadev.architectcoders.databinding.ActivityMainBinding
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.model.PermissionRequester
 import com.liceadev.architectcoders.model.server.PhotosRepository
-import com.liceadev.architectcoders.ui.detail.DetailActivity
+import com.liceadev.architectcoders.ui.detail.DetailFragment
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
 import com.liceadev.architectcoders.extensions.app
 
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding.progress.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
         when (model) {
             is UiModel.Content -> adapter.photos = model.photos
-            is UiModel.Navigation -> startActivity(DetailActivity.getIntent(this, model.photo.id))
+//            is UiModel.Navigation -> startActivity(DetailFragment.getIntent(this, model.photo.id))
             is UiModel.RequestLocationPermission -> permissionRequester.request {
                 viewModel.onPermissionRequested()
             }
