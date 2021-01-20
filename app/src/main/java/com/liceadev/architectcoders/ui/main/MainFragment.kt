@@ -16,6 +16,7 @@ import com.liceadev.architectcoders.extensions.app
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.model.PermissionRequester
 import com.liceadev.architectcoders.model.server.PhotosRepository
+import com.liceadev.architectcoders.ui.common.EventObserver
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
 
 class MainFragment : Fragment() {
@@ -42,6 +43,12 @@ class MainFragment : Fragment() {
         navController = view.findNavController()
         viewModel = getViewModel { MainViewModel(PhotosRepository(requireContext().app)) }
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
+        viewModel.navigation.observe(viewLifecycleOwner, EventObserver { photoId ->
+            navController.navigate(
+                R.id.action_mainFragment_to_detailFragment,
+                bundleOf("id" to photoId)
+            )
+        })
 
         adapter = PhotosAdapter(viewModel::onPhotoClick)
         binding.rvPhotos.adapter = adapter
@@ -51,16 +58,9 @@ class MainFragment : Fragment() {
         binding.progress.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
         when (model) {
             is UiModel.Content -> adapter.photos = model.photos
-            is UiModel.Navigation -> {
-                navController.navigate(
-                    R.id.action_mainFragment_to_detailFragment,
-                    bundleOf("id" to model.photo.id)
-                )
-            }
             is UiModel.RequestLocationPermission -> permissionRequester.request {
                 viewModel.onPermissionRequested()
             }
         }
-
     }
 }

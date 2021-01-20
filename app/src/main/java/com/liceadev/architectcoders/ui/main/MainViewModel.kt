@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.liceadev.architectcoders.model.database.Photo
 import com.liceadev.architectcoders.model.server.PhotosRepository
+import com.liceadev.architectcoders.ui.common.Event
 import com.liceadev.architectcoders.ui.common.ScopedViewModel
 import kotlinx.coroutines.launch
 
@@ -16,10 +17,16 @@ class MainViewModel(private val photosRepository: PhotosRepository) : ScopedView
             return _model
         }
 
+    private val _navigation = MutableLiveData<Event<Int>>()
+    val navigation: LiveData<Event<Int>>
+        get() {
+            if (_navigation.value == null) refresh()
+            return _navigation
+        }
+
     sealed class UiModel {
         object Loading : UiModel()
         class Content(val photos: List<Photo>) : UiModel()
-        class Navigation(val photo: Photo) : UiModel()
         object RequestLocationPermission : UiModel()
     }
 
@@ -35,6 +42,6 @@ class MainViewModel(private val photosRepository: PhotosRepository) : ScopedView
     }
 
     fun onPhotoClick(photo: Photo) {
-        _model.value = UiModel.Navigation(photo)
+        _navigation.value = Event(photo.id)
     }
 }
