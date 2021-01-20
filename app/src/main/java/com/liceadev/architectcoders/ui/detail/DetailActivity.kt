@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.ActivityDetailBinding
@@ -50,5 +51,8 @@ class DetailActivity : AppCompatActivity() {
         binding.tvLikes.text = getString(R.string.detail_likes_count, likes)
 
 //        binding.tvInfoDetail.setPhoto(photo.user)
+
+        val icon = if (photo.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+        binding.fabFavorite.setImageDrawable(ContextCompat.getDrawable(this@DetailActivity, icon))
     }
 }
