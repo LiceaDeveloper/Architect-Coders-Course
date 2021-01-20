@@ -3,16 +3,17 @@ package com.liceadev.architectcoders.ui.main
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.liceadev.architectcoders.databinding.ActivityMainBinding
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.model.PermissionRequester
 import com.liceadev.architectcoders.model.server.PhotosRepository
-import com.liceadev.architectcoders.ui.common.CoroutineScopeActivity
 import com.liceadev.architectcoders.ui.detail.DetailActivity
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
+import com.liceadev.architectcoders.extensions.app
 
-class MainActivity : CoroutineScopeActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: PhotosAdapter
@@ -24,7 +25,7 @@ class MainActivity : CoroutineScopeActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = getViewModel { MainViewModel(PhotosRepository(application)) }
+        viewModel = getViewModel { MainViewModel(PhotosRepository(app)) }
         viewModel.model.observe(this, Observer(::updateUi))
 
         adapter = PhotosAdapter(viewModel::onPhotoClick)
@@ -35,7 +36,7 @@ class MainActivity : CoroutineScopeActivity() {
         binding.progress.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
         when (model) {
             is UiModel.Content -> adapter.photos = model.photos
-            is UiModel.Navigation -> startActivity(DetailActivity.getIntent(this, model.photo))
+            is UiModel.Navigation -> startActivity(DetailActivity.getIntent(this, model.photo.id))
             is UiModel.RequestLocationPermission -> permissionRequester.request {
                 viewModel.onPermissionRequested()
             }

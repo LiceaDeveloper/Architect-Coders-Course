@@ -7,19 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.ActivityDetailBinding
+import com.liceadev.architectcoders.extensions.app
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.extensions.loadPhoto
-import com.liceadev.architectcoders.model.server.Photo
+import com.liceadev.architectcoders.model.server.PhotosRepository
 
-class DetailActivity : AppCompatActivity(){
+class DetailActivity : AppCompatActivity() {
     private lateinit var viewModel: DetailViewModel
     private lateinit var binding: ActivityDetailBinding
 
     companion object {
-        const val EXTRA_PHOTO = "DetailActivity:photo"
-        fun getIntent(context: Context, photo: Photo): Intent {
+        const val EXTRA_PHOTO_ID = "DetailActivity:photoId"
+        fun getIntent(context: Context, photoId: Int): Intent {
             val i = Intent(context, DetailActivity::class.java)
-            i.putExtra(EXTRA_PHOTO, photo)
+            i.putExtra(EXTRA_PHOTO_ID, photoId)
             return i
         }
     }
@@ -29,25 +30,25 @@ class DetailActivity : AppCompatActivity(){
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val photo: Photo = intent.getParcelableExtra(EXTRA_PHOTO)
-            ?: throw (IllegalStateException("Photo not found"))
-
-        viewModel = getViewModel { DetailViewModel(photo) }
+        viewModel = getViewModel {
+            DetailViewModel(
+                intent.getIntExtra(EXTRA_PHOTO_ID, -1),
+                PhotosRepository(app)
+            )
+        }
         viewModel.model.observe(this, Observer(::updateUi))
+
+        binding.fabFavorite.setOnClickListener { viewModel.onFavoriteClicked() }
     }
 
     private fun updateUi(model: DetailViewModel.UiModel) {
         val photo = model.photo
-        val background = photo.urls?.full ?: ""
+        val background = photo.urlFull
         binding.ivPhotoDetail.loadPhoto(background)
-        binding.tbPhotoDetail.title =
-            if (photo.description != null || photo.altDescription != null) {
-                photo.description ?: photo.altDescription
-            } else {
-                ""
-            }
-        val likes = photo.likes ?: 0
+        binding.tbPhotoDetail.title = photo.description
+        val likes = photo.likes
         binding.tvLikes.text = getString(R.string.detail_likes_count, likes)
-        binding.tvInfoDetail.setPhoto(photo.user)
+
+//        binding.tvInfoDetail.setPhoto(photo.user)
     }
 }
