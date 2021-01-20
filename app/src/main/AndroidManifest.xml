@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPhotos">
-        <activity android:name=".ui.NavActivity">
+        <activity android:name=".ui.NavActivity"
+            android:theme="@style/Theme.MyPhotos.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.FragmentMainBinding
 import com.liceadev.architectcoders.extensions.app
 import com.liceadev.architectcoders.extensions.getViewModel
@@ -18,6 +22,7 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: PhotosAdapter
+    private lateinit var navController: NavController
 
     private val permissionRequester by lazy {
         PermissionRequester(requireActivity(), ACCESS_COARSE_LOCATION)
@@ -34,6 +39,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = view.findNavController()
         viewModel = getViewModel { MainViewModel(PhotosRepository(requireContext().app)) }
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
 
@@ -45,7 +51,12 @@ class MainFragment : Fragment() {
         binding.progress.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
         when (model) {
             is UiModel.Content -> adapter.photos = model.photos
-//            is UiModel.Navigation -> startActivity(DetailFragment.getIntent(this, model.photo.id))
+            is UiModel.Navigation -> {
+                navController.navigate(
+                    R.id.action_mainFragment_to_detailFragment,
+                    bundleOf("id" to model.photo.id)
+                )
+            }
             is UiModel.RequestLocationPermission -> permissionRequester.request {
                 viewModel.onPermissionRequested()
             }

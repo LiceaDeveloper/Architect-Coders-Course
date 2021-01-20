@@ -22,17 +22,17 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val photoId = arguments?.getInt("id", -1) ?: -1
+        val photoId = arguments?.getInt("id", -1) ?: -1
         viewModel = getViewModel {
             DetailViewModel(
-                1,
+                photoId,
                 PhotosRepository(requireContext().app)
             )
         }
