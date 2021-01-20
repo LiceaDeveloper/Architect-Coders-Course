@@ -1,5 +1,6 @@
 package com.liceadev.architectcoders.model
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -7,7 +8,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.BasePermissionListener
 
 class PermissionRequester(
-    private val activity: AppCompatActivity,
+    private val activity: Activity,
     private val permission: String
 ) {
 

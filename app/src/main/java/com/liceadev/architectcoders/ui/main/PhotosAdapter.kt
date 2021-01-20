@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.liceadev.architectcoders.databinding.ItemPhotoBinding
 import com.liceadev.architectcoders.extensions.loadPhoto
-import com.liceadev.architectcoders.model.Photo
+import com.liceadev.architectcoders.model.database.Photo
 import kotlin.properties.Delegates
 
 class PhotosAdapter(private val photoClick: (Photo) -> Unit) :
@@ -43,13 +43,9 @@ class PhotosAdapter(private val photoClick: (Photo) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: Photo) {
-            binding.tvPhotoName.text =
-                if (photo.description != null || photo.altDescription != null) {
-                    photo.description ?: photo.altDescription
-                } else {
-                    ""
-                }
-            binding.ivPhoto.loadPhoto(photo.urls?.thumb ?: "")
+            binding.tvPhotoName.text = photo.description
+
+            binding.ivPhoto.loadPhoto(photo.urlThumb)
         }
     }
 }

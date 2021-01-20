@@ -2,14 +2,13 @@ package com.liceadev.architectcoders.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.liceadev.architectcoders.model.PhotosRepository
-import com.liceadev.architectcoders.model.Photo
-import com.liceadev.architectcoders.model.Scope
+import com.liceadev.architectcoders.model.database.Photo
+import com.liceadev.architectcoders.model.server.PhotosRepository
+import com.liceadev.architectcoders.ui.common.Event
+import com.liceadev.architectcoders.ui.common.ScopedViewModel
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val photosRepository: PhotosRepository) : ViewModel(),
-    Scope by Scope.ScopeImpl() {
+class MainViewModel(private val photosRepository: PhotosRepository) : ScopedViewModel() {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -18,15 +17,17 @@ class MainViewModel(private val photosRepository: PhotosRepository) : ViewModel(
             return _model
         }
 
+    private val _navigation = MutableLiveData<Event<Int>>()
+    val navigation: LiveData<Event<Int>>
+        get() {
+            if (_navigation.value == null) refresh()
+            return _navigation
+        }
+
     sealed class UiModel {
         object Loading : UiModel()
         class Content(val photos: List<Photo>) : UiModel()
-        class Navigation(val photo: Photo) : UiModel()
         object RequestLocationPermission : UiModel()
-    }
-
-    init {
-        initScope()
     }
 
     private fun refresh() {
@@ -36,17 +37,11 @@ class MainViewModel(private val photosRepository: PhotosRepository) : ViewModel(
     fun onPermissionRequested(){
         launch {
             _model.value = UiModel.Loading
-            _model.value = UiModel.Content(photosRepository.findPopularPhotosByRegion().results)
+            _model.value = UiModel.Content(photosRepository.findPopularPhotosByRegion())
         }
     }
 
     fun onPhotoClick(photo: Photo) {
-        _model.value = UiModel.Navigation(photo)
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        cancelScope()
+        _navigation.value = Event(photo.id)
     }
 }

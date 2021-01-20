@@ -1,7 +1,6 @@
 package com.liceadev.architectcoders.model
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
 import android.location.Location
 import com.google.android.gms.location.LocationServices

@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.model.server
 
 import retrofit2.http.GET
 import retrofit2.http.Query
