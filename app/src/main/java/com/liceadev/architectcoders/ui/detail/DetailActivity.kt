@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
         val likes = photo.likes
         binding.tvLikes.text = getString(R.string.detail_likes_count, likes)
 
-//        binding.tvInfoDetail.setPhoto(photo.user)
+        binding.tvInfoDetail.setPhoto(photo.user)
 
         val icon = if (photo.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
         binding.fabFavorite.setImageDrawable(ContextCompat.getDrawable(this@DetailActivity, icon))

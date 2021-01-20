@@ -5,6 +5,7 @@ import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.model.CountryRepository
 import com.liceadev.architectcoders.model.database.Photo as DbPhoto
 import com.liceadev.architectcoders.model.server.Photo as ServerPhoto
+import com.liceadev.architectcoders.model.database.User as DbrUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -20,7 +21,7 @@ class PhotosRepository(application: PhotoApp) {
             if (photoCount() <= 0) {
 
                 val movies = PhotoClient.service
-                    .getPopularPhotos(apiKey, regionRepository.findLastCountry(),30)
+                    .getPopularPhotos(apiKey, regionRepository.findLastCountry(), 30)
                     .results
 
                 insertPhotos(movies.map(ServerPhoto::convertToDbMovie))
@@ -45,12 +46,24 @@ private fun ServerPhoto.convertToDbMovie(): DbPhoto {
     val photoUrlThumb = urls?.thumb ?: ""
     val photoLikes = likes ?: 0
 
+    val photoUser = DbrUser(
+        id = user.id,
+        totalPhotos = user.totalPhotos,
+        totalLikes = user.totalLikes,
+        portfolioUrl = user.portfolioUrl,
+        profileImage = user.profileImage,
+        name = user.name,
+        location = user.location,
+        username = user.username
+    )
+
     return DbPhoto(
         0,
         photoDescription,
         photoLikes,
         photoUrlFull,
         photoUrlThumb,
+        photoUser,
         false
     )
 }

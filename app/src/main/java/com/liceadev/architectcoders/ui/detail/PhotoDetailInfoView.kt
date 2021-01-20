@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.liceadev.architectcoders.R
-import com.liceadev.architectcoders.model.server.User
+import com.liceadev.architectcoders.model.database.User
 
 class PhotoDetailInfoView @JvmOverloads constructor(
     context: Context,
@@ -21,6 +21,10 @@ class PhotoDetailInfoView @JvmOverloads constructor(
 
             bold { append("UserName: ") }
             appendLine(username ?: context.getString(R.string.detail_not_data))
+
+            val photosCount = totalPhotos?:0
+            bold { append("Total photos: ") }
+            appendLine("$photosCount")
 
             bold { append("Portfolio Url: ") }
             appendLine(portfolioUrl ?: context.getString(R.string.detail_not_data))
