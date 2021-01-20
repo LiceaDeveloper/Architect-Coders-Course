@@ -1,5 +1,6 @@
 package com.liceadev.architectcoders.model.server
 
+import com.liceadev.architectcoders.model.server.PhotosResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
