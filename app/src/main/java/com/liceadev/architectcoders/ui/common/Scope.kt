@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.ui.common
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
