@@ -1,8 +1,8 @@
 package com.liceadev.architectcoders.model.database
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.liceadev.architectcoders.model.server.ProfileImage
 
 @Entity
 data class Photo(
@@ -11,26 +11,25 @@ data class Photo(
     val likes: Int,
     val urlFull: String,
     val urlThumb: String,
-    val user: User,
+    @Embedded val user: User,
     val favorite: Boolean
 )
 
-@Entity
 data class User(
 
-    val id: String? = null,
+    val userId: String?,
 
-    val totalPhotos: Int? = null,
+    val totalPhotos: Int?,
 
-    val totalLikes: Int? = null,
+    val totalLikes: Int?,
 
-    val portfolioUrl: String? = null,
+    val portfolioUrl: String?,
 
-    val profileImage: ProfileImage? = null,
+    val profileImage: String?,
 
-    val name: String? = null,
+    val name: String?,
 
-    val location: String? = null,
+    val location: String?,
 
-    val username: String? = null
+    val username: String?
 )

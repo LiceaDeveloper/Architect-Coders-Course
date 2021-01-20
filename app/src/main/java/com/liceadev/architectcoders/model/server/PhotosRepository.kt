@@ -47,11 +47,11 @@ private fun ServerPhoto.convertToDbMovie(): DbPhoto {
     val photoLikes = likes ?: 0
 
     val photoUser = DbrUser(
-        id = user.id,
+        userId = user.id,
         totalPhotos = user.totalPhotos,
         totalLikes = user.totalLikes,
         portfolioUrl = user.portfolioUrl,
-        profileImage = user.profileImage,
+        profileImage = user.profileImage?.medium,
         name = user.name,
         location = user.location,
         username = user.username
