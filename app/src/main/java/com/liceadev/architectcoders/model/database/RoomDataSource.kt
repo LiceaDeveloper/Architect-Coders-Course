@@ -1,6 +1,6 @@
 package com.liceadev.architectcoders.model.database
 
-import com.liceadev.data.LocalDataSource
+import com.liceadev.data.source.LocalDataSource
 import com.liceadev.domain.Photo as DomainPhoto
 import com.liceadev.domain.User as DomainUser
 import com.liceadev.architectcoders.model.database.Photo as RoomPhoto

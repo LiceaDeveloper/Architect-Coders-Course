@@ -1,6 +1,7 @@
 package com.liceadev.data
 
 import com.liceadev.data.PermissionChecker.Permission.COARSE_LOCATION
+import com.liceadev.data.source.LocationDataSources
 
 class CountryRepository(
     private val locationDataSources: LocationDataSources,
@@ -22,9 +23,7 @@ class CountryRepository(
     }
 }
 
-interface LocationDataSources {
-    suspend fun getCountry(): String?
-}
+
 
 interface PermissionChecker {
 
