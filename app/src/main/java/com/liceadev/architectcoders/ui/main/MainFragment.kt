@@ -14,10 +14,16 @@ import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.FragmentMainBinding
 import com.liceadev.architectcoders.extensions.app
 import com.liceadev.architectcoders.extensions.getViewModel
+import com.liceadev.architectcoders.model.AndroidPermissionChecker
 import com.liceadev.architectcoders.model.PermissionRequester
-import com.liceadev.architectcoders.model.server.PhotosRepository
+import com.liceadev.architectcoders.model.PlayServicesLocation
+import com.liceadev.architectcoders.model.database.RoomDataSource
+import com.liceadev.architectcoders.model.server.UnsplashDataSource
 import com.liceadev.architectcoders.ui.common.EventObserver
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
+import com.liceadev.data.CountryRepository
+import com.liceadev.data.PhotosRepository
+import com.liceadev.usecases.GetPhotos
 
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
@@ -41,7 +47,24 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
-        viewModel = getViewModel { MainViewModel(PhotosRepository(requireContext().app)) }
+        viewModel = getViewModel {
+            val localDataSource = RoomDataSource(requireContext().app.db)
+            val remoteDataSource = UnsplashDataSource()
+            val countryRepository = CountryRepository(
+                PlayServicesLocation(requireContext().app),
+                AndroidPermissionChecker(requireContext().app)
+            )
+            MainViewModel(
+                GetPhotos(
+                    PhotosRepository(
+                        localDataSource,
+                        remoteDataSource,
+                        countryRepository,
+                        getString(R.string.unsplash_api_key)
+                    )
+                )
+            )
+        }
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver { photoId ->
             navController.navigate(

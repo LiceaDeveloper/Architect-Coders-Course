@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.liceadev.architectcoders.R
-import com.liceadev.architectcoders.model.database.User
+import com.liceadev.domain.User
 
 class PhotoDetailInfoView @JvmOverloads constructor(
     context: Context,

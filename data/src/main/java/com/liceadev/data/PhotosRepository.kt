@@ -16,14 +16,20 @@ class PhotosRepository(
         }
         return localDataSource.getPhotos()
     }
+
+    suspend fun findById(id: Int): Photo = localDataSource.findById(id)
+
+    suspend fun update(photo: Photo) = localDataSource.update(photo)
 }
 
 interface LocalDataSource {
-    fun isEmpty(): Boolean
-    fun savePhotos(photos: List<Photo> )
-    fun getPhotos(): List<Photo>
+    suspend fun isEmpty(): Boolean
+    suspend fun savePhotos(photos: List<Photo> )
+    suspend fun getPhotos(): List<Photo>
+    suspend fun findById(id: Int): Photo
+    suspend fun update(photo: Photo)
 }
 
 interface RemoteDataSource {
-     fun getPhotos(apiKey: String, country: String): List<Photo>
+     suspend fun getPhotos(apiKey: String, country: String): List<Photo>
 }
