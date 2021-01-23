@@ -12,14 +12,18 @@ class CountryRepository(
     }
 
 
-    suspend  fun findCountry(): String {
+    suspend fun findCountry(): String {
         val permissionGranted = permissionChecker.check(COARSE_LOCATION)
-        return if (permissionGranted) locationDataSources.getCountry() else DEFAULT_COUNTRY
+        return if (permissionGranted) {
+            locationDataSources.getCountry() ?: DEFAULT_COUNTRY
+        } else {
+            DEFAULT_COUNTRY
+        }
     }
 }
 
 interface LocationDataSources {
-     fun getCountry(): String
+    suspend fun getCountry(): String?
 }
 
 interface PermissionChecker {
