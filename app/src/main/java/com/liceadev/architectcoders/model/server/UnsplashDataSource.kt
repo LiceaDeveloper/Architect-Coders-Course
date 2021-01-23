@@ -1,6 +1,6 @@
 package com.liceadev.architectcoders.model.server
 
-import com.liceadev.data.RemoteDataSource
+import com.liceadev.data.source.RemoteDataSource
 import com.liceadev.domain.Photo as DomainPhoto
 import com.liceadev.domain.User as DomainUser
 import com.liceadev.architectcoders.model.server.Photo as ServerPhoto

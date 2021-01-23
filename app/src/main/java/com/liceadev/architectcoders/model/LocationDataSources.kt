@@ -5,7 +5,7 @@ import android.app.Application
 import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.LocationServices
-import com.liceadev.data.LocationDataSources
+import com.liceadev.data.source.LocationDataSources
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
