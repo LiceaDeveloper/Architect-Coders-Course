@@ -2,13 +2,13 @@ package com.liceadev.architectcoders.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.liceadev.architectcoders.model.database.Photo
-import com.liceadev.architectcoders.model.server.PhotosRepository
 import com.liceadev.architectcoders.ui.common.Event
 import com.liceadev.architectcoders.ui.common.ScopedViewModel
+import com.liceadev.domain.Photo
+import com.liceadev.usecases.GetPhotos
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val photosRepository: PhotosRepository) : ScopedViewModel() {
+class MainViewModel(private val getPhotos: GetPhotos) : ScopedViewModel() {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -37,7 +37,7 @@ class MainViewModel(private val photosRepository: PhotosRepository) : ScopedView
     fun onPermissionRequested(){
         launch {
             _model.value = UiModel.Loading
-            _model.value = UiModel.Content(photosRepository.findPopularPhotosByRegion())
+            _model.value = UiModel.Content(getPhotos.invoke())
         }
     }
 

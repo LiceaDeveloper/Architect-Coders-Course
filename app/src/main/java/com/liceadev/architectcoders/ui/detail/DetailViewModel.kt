@@ -2,13 +2,17 @@ package com.liceadev.architectcoders.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.liceadev.architectcoders.model.database.Photo
-import com.liceadev.architectcoders.model.server.PhotosRepository
 import com.liceadev.architectcoders.ui.common.ScopedViewModel
+import com.liceadev.domain.Photo
+import com.liceadev.usecases.FindPhotoById
+import com.liceadev.usecases.TogglePhotoFavorite
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val photoId: Int, private val photosRepository: PhotosRepository) :
-    ScopedViewModel() {
+class DetailViewModel(
+    private val photoId: Int,
+    private val findPhotoById: FindPhotoById,
+    private val togglePhotoFavorite: TogglePhotoFavorite
+) : ScopedViewModel() {
 
     class UiModel(val photo: Photo)
 
@@ -20,14 +24,12 @@ class DetailViewModel(private val photoId: Int, private val photosRepository: Ph
         }
 
     private fun findPhoto() = launch {
-        _model.value = UiModel(photosRepository.findById(photoId))
+        _model.value = UiModel(findPhotoById.invoke(photoId))
     }
 
     fun onFavoriteClicked() = launch {
         _model.value?.photo?.let {
-            val updatedPhoto = it.copy(favorite = !it.favorite)
-            _model.value = UiModel(updatedPhoto)
-            photosRepository.update(updatedPhoto)
+            _model.value = UiModel( togglePhotoFavorite.invoke(it))
         }
     }
 }
