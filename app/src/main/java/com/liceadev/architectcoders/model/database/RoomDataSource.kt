@@ -1,13 +1,11 @@
 package com.liceadev.architectcoders.model.database
 
+import com.liceadev.architectcoders.model.mappers.toDomainPhoto
+import com.liceadev.architectcoders.model.mappers.toRoomPhoto
 import com.liceadev.data.source.LocalDataSource
 import com.liceadev.domain.Photo as DomainPhoto
-import com.liceadev.domain.User as DomainUser
-import com.liceadev.architectcoders.model.database.Photo as RoomPhoto
-import com.liceadev.architectcoders.model.database.User as RoomUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
 
 class RoomDataSource(db: PhotoDatabase) : LocalDataSource {
 
@@ -33,44 +31,5 @@ class RoomDataSource(db: PhotoDatabase) : LocalDataSource {
     }
 }
 
-fun DomainPhoto.toRoomPhoto(): RoomPhoto = RoomPhoto(
-    id = id,
-    description = description,
-    likes = likes,
-    urlFull = urlFull,
-    urlThumb = urlThumb,
-    user = user.toRoomUser(),
-    favorite = favorite
-)
 
-fun RoomPhoto.toDomainPhoto(): DomainPhoto = DomainPhoto(
-    id,
-    description,
-    likes,
-    urlFull,
-    urlThumb,
-    user.toDomainUser(),
-    favorite
-)
 
-fun RoomUser.toDomainUser(): DomainUser = DomainUser(
-    userId,
-    totalPhotos,
-    totalLikes,
-    portfolioUrl,
-    profileImage,
-    name,
-    location,
-    username
-)
-
-fun DomainUser.toRoomUser(): RoomUser = RoomUser(
-    userId,
-    totalPhotos,
-    totalLikes,
-    portfolioUrl,
-    profileImage,
-    name,
-    location,
-    username
-)
