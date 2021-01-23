@@ -1,5 +1,7 @@
 package com.liceadev.data
 
+import com.liceadev.data.source.LocalDataSource
+import com.liceadev.data.source.RemoteDataSource
 import com.liceadev.domain.Photo
 
 class PhotosRepository(
@@ -22,14 +24,5 @@ class PhotosRepository(
     suspend fun update(photo: Photo) = localDataSource.update(photo)
 }
 
-interface LocalDataSource {
-    suspend fun isEmpty(): Boolean
-    suspend fun savePhotos(photos: List<Photo> )
-    suspend fun getPhotos(): List<Photo>
-    suspend fun findById(id: Int): Photo
-    suspend fun update(photo: Photo)
-}
 
-interface RemoteDataSource {
-     suspend fun getPhotos(apiKey: String, country: String): List<Photo>
-}
+
