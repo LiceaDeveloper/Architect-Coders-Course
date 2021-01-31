@@ -26,14 +26,16 @@ import com.liceadev.data.PhotosRepository
 import com.liceadev.usecases.GetPhotos
 
 class MainFragment : Fragment() {
+
     private lateinit var binding: FragmentMainBinding
-    private lateinit var viewModel: MainViewModel
     private lateinit var adapter: PhotosAdapter
     private lateinit var navController: NavController
 
     private val permissionRequester by lazy {
         PermissionRequester(requireActivity(), ACCESS_COARSE_LOCATION)
     }
+
+    private val viewModel: MainViewModel by lazy { getViewModel { requireContext().app.component.mainViewModel } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,24 +49,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
-        viewModel = getViewModel {
-            val localDataSource = RoomDataSource(requireContext().app.db)
-            val remoteDataSource = UnsplashDataSource()
-            val countryRepository = CountryRepository(
-                PlayServicesLocation(requireContext().app),
-                AndroidPermissionChecker(requireContext().app)
-            )
-            MainViewModel(
-                GetPhotos(
-                    PhotosRepository(
-                        localDataSource,
-                        remoteDataSource,
-                        countryRepository,
-                        getString(R.string.unsplash_api_key)
-                    )
-                )
-            )
-        }
+
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver { photoId ->
             navController.navigate(

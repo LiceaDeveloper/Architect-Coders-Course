@@ -7,6 +7,7 @@ import com.liceadev.architectcoders.ui.common.ScopedViewModel
 import com.liceadev.domain.Photo
 import com.liceadev.usecases.GetPhotos
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainViewModel(private val getPhotos: GetPhotos) : ScopedViewModel() {
 
