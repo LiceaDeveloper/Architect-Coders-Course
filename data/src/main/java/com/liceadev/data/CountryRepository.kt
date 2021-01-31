@@ -1,10 +1,10 @@
 package com.liceadev.data
 
 import com.liceadev.data.PermissionChecker.Permission.COARSE_LOCATION
-import com.liceadev.data.source.LocationDataSources
+import com.liceadev.data.source.LocationDataSource
 
 class CountryRepository(
-    private val locationDataSources: LocationDataSources,
+    private val locationDataSource: LocationDataSource,
     private val permissionChecker: PermissionChecker
 ) {
 
@@ -16,7 +16,7 @@ class CountryRepository(
     suspend fun findCountry(): String {
         val permissionGranted = permissionChecker.check(COARSE_LOCATION)
         return if (permissionGranted) {
-            locationDataSources.getCountry() ?: DEFAULT_COUNTRY
+            locationDataSource.getCountry() ?: DEFAULT_COUNTRY
         } else {
             DEFAULT_COUNTRY
         }

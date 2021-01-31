@@ -1,5 +1,5 @@
 package com.liceadev.data.source
 
-interface LocationDataSources {
+interface LocationDataSource {
     suspend fun getCountry(): String?
 }

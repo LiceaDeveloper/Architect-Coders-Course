@@ -12,18 +12,11 @@ import com.liceadev.architectcoders.databinding.FragmentDetailBinding
 import com.liceadev.architectcoders.extensions.app
 import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.extensions.loadPhoto
-import com.liceadev.architectcoders.model.AndroidPermissionChecker
-import com.liceadev.architectcoders.model.PlayServicesLocation
-import com.liceadev.architectcoders.model.database.RoomDataSource
-import com.liceadev.architectcoders.model.server.UnsplashDataSource
-import com.liceadev.data.CountryRepository
-import com.liceadev.data.PhotosRepository
-import com.liceadev.usecases.FindPhotoById
-import com.liceadev.usecases.TogglePhotoFavorite
 
 class DetailFragment : Fragment() {
-    private lateinit var viewModel: DetailViewModel
+
     private lateinit var binding: FragmentDetailBinding
+    private val viewModel by lazy { getViewModel { requireContext().app.component.detailViewModel } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,31 +30,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val photoId = arguments?.getInt("id", -1) ?: -1
-        viewModel = getViewModel {
-            val localDataSource = RoomDataSource(requireContext().app.db)
-            val remoteDataSource = UnsplashDataSource()
-            val countryRepository = CountryRepository(
-                PlayServicesLocation(requireContext().app),
-                AndroidPermissionChecker(requireContext().app)
-            )
-            val photosRepository = PhotosRepository(
-                localDataSource,
-                remoteDataSource,
-                countryRepository,
-                getString(R.string.unsplash_api_key)
-            )
 
-            val findPhotoById = FindPhotoById(photosRepository)
-            val togglePhotoFavorite = TogglePhotoFavorite(photosRepository)
-
-
-
-            DetailViewModel(
-                photoId,
-                findPhotoById,
-                togglePhotoFavorite
-            )
-        }
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
 
         binding.fabFavorite.setOnClickListener { viewModel.onFavoriteClicked() }
