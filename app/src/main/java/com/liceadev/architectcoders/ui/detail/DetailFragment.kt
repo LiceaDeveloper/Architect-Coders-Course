@@ -16,7 +16,8 @@ import com.liceadev.architectcoders.extensions.loadPhoto
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private val viewModel by lazy { getViewModel { requireContext().app.component.detailViewModel } }
+    private lateinit var component: DetailFragmentComponent
+    private val viewModel by lazy { getViewModel { component.detailViewModel } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +31,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val photoId = arguments?.getInt("id", -1) ?: -1
-
+        component = requireContext().app.component.plus(DetailFragmentModule(photoId))
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
 
         binding.fabFavorite.setOnClickListener { viewModel.onFavoriteClicked() }
