@@ -35,7 +35,8 @@ class MainFragment : Fragment() {
         PermissionRequester(requireActivity(), ACCESS_COARSE_LOCATION)
     }
 
-    private val viewModel: MainViewModel by lazy { getViewModel { requireContext().app.component.mainViewModel } }
+    private lateinit var  component: MainFragmentComponent
+    private val viewModel: MainViewModel by lazy { getViewModel { component.mainViewModel } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +49,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        component = requireContext().app.component.plus(MainFragmentModule())
         navController = view.findNavController()
 
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
