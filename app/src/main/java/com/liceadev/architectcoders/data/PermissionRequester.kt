@@ -1,7 +1,6 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.data
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse

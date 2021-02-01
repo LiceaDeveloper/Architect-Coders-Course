@@ -1,9 +1,9 @@
-package com.liceadev.architectcoders.model.mappers
+package com.liceadev.architectcoders.data.mappers
 
-import com.liceadev.architectcoders.model.database.Photo  as RoomPhoto
+import com.liceadev.architectcoders.data.database.Photo  as RoomPhoto
 import com.liceadev.domain.Photo as DomainPhoto
 import com.liceadev.domain.User as DomainUser
-import com.liceadev.architectcoders.model.server.Photo as ServerPhoto
+import com.liceadev.architectcoders.data.server.Photo as ServerPhoto
 
 fun ServerPhoto.toDomainPhoto(): DomainPhoto {
     val photoDescription = description ?: (altDescription ?: "")

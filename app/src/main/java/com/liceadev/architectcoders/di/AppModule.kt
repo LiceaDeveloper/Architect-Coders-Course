@@ -3,11 +3,11 @@ package com.liceadev.architectcoders.di
 import android.app.Application
 import androidx.room.Room
 import com.liceadev.architectcoders.R
-import com.liceadev.architectcoders.model.AndroidPermissionChecker
-import com.liceadev.architectcoders.model.PlayServicesLocation
-import com.liceadev.architectcoders.model.database.PhotoDatabase
-import com.liceadev.architectcoders.model.database.RoomDataSource
-import com.liceadev.architectcoders.model.server.UnsplashDataSource
+import com.liceadev.architectcoders.data.AndroidPermissionChecker
+import com.liceadev.architectcoders.data.PlayServicesLocation
+import com.liceadev.architectcoders.data.database.PhotoDatabase
+import com.liceadev.architectcoders.data.database.RoomDataSource
+import com.liceadev.architectcoders.data.server.UnsplashDataSource
 import com.liceadev.data.PermissionChecker
 import com.liceadev.data.source.LocalDataSource
 import com.liceadev.data.source.LocationDataSource

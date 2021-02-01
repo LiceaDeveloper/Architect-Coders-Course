@@ -1,6 +1,6 @@
-package com.liceadev.architectcoders.model.server
+package com.liceadev.architectcoders.data.server
 
-import com.liceadev.architectcoders.model.mappers.toDomainPhoto
+import com.liceadev.architectcoders.data.mappers.toDomainPhoto
 import com.liceadev.data.source.RemoteDataSource
 import com.liceadev.domain.Photo as DomainPhoto
 

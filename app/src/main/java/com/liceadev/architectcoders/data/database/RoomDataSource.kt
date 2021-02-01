@@ -1,7 +1,7 @@
-package com.liceadev.architectcoders.model.database
+package com.liceadev.architectcoders.data.database
 
-import com.liceadev.architectcoders.model.mappers.toDomainPhoto
-import com.liceadev.architectcoders.model.mappers.toRoomPhoto
+import com.liceadev.architectcoders.data.mappers.toDomainPhoto
+import com.liceadev.architectcoders.data.mappers.toRoomPhoto
 import com.liceadev.data.source.LocalDataSource
 import com.liceadev.domain.Photo as DomainPhoto
 import kotlinx.coroutines.Dispatchers

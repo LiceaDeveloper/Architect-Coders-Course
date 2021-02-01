@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model.server
+package com.liceadev.architectcoders.data.server
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

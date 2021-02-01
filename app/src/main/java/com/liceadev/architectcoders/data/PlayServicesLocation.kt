@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.data
 
 import android.annotation.SuppressLint
 import android.app.Application

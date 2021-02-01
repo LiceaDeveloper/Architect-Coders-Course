@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model
+package com.liceadev.architectcoders.data
 
 import android.app.Application
 import android.content.pm.PackageManager

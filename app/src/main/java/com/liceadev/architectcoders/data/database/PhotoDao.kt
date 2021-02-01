@@ -1,4 +1,4 @@
-package com.liceadev.architectcoders.model.database
+package com.liceadev.architectcoders.data.database
 
 import androidx.room.*
 
