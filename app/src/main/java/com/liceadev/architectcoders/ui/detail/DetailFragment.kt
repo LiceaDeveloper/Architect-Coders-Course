@@ -5,19 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.liceadev.architectcoders.R
 import com.liceadev.architectcoders.databinding.FragmentDetailBinding
-import com.liceadev.architectcoders.extensions.app
-import com.liceadev.architectcoders.extensions.getViewModel
 import com.liceadev.architectcoders.extensions.loadPhoto
+import org.koin.androidx.scope.ScopeFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class DetailFragment : Fragment() {
+class DetailFragment : ScopeFragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private lateinit var component: DetailFragmentComponent
-    private val viewModel by lazy { getViewModel { component.detailViewModel } }
+    private val viewModel: DetailViewModel
+            by viewModel{
+                val photoId = arguments?.getInt("id", -1) ?: -1
+                parametersOf(photoId)
+            }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,8 +33,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val photoId = arguments?.getInt("id", -1) ?: -1
-        component = requireContext().app.component.plus(DetailFragmentModule(photoId))
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
 
         binding.fabFavorite.setOnClickListener { viewModel.onFavoriteClicked() }
