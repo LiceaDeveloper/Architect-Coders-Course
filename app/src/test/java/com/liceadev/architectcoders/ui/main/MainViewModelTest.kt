@@ -15,6 +15,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
+import com.liceadev.testshared.mockedPhoto
 
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
@@ -27,9 +28,6 @@ class MainViewModelTest {
 
     @Mock
     lateinit var observer: Observer<UiModel>
-
-   @Mock
-   lateinit var mockedPhoto: Photo
 
     private lateinit var viewModel: MainViewModel
 

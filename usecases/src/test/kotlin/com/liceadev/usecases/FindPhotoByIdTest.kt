@@ -2,6 +2,7 @@ package com.liceadev.usecases
 
 import com.liceadev.data.PhotosRepository
 import com.liceadev.domain.Photo
+import com.liceadev.testshared.mockedPhoto
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -18,9 +19,6 @@ class FindPhotoByIdTest {
     lateinit var photosRepository: PhotosRepository
 
     lateinit var findPhotoById: FindPhotoById
-
-    @Mock
-    lateinit var mockedPhoto: Photo
 
     @Before
     fun setUp() {

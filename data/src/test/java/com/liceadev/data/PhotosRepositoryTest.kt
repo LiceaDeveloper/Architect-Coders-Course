@@ -3,6 +3,7 @@ package com.liceadev.data
 import com.liceadev.data.source.LocalDataSource
 import com.liceadev.data.source.RemoteDataSource
 import com.liceadev.domain.Photo
+import com.liceadev.testshared.mockedPhoto
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -29,9 +30,6 @@ class PhotosRepositoryTest {
     lateinit var photosRepository: PhotosRepository
 
     private val apiKey = "1a2b3c4d"
-
-    @Mock
-    lateinit var mockedPhoto: Photo
 
     @Before
     fun setUp() {

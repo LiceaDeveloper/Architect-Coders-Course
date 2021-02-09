@@ -3,6 +3,7 @@ package com.liceadev.usecases
 import com.liceadev.data.PhotosRepository
 import com.liceadev.domain.Photo
 import com.liceadev.domain.User
+import com.liceadev.testshared.mockedPhoto
 import com.nhaarman.mockitokotlin2.verify
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue
@@ -20,29 +21,6 @@ class TogglePhotoFavoriteTest {
     lateinit var photosRepository: PhotosRepository
 
     lateinit var togglePhotoFavorite: TogglePhotoFavorite
-
-    private val mockedPhoto by lazy {
-        Photo(
-            id = 0,
-            description = "description",
-            likes = 0,
-            urlFull = "urlFull",
-            urlThumb = "urlThumb",
-            user = mockedUser,
-            favorite = false
-        )
-    }
-
-    private val mockedUser = User(
-        userId = "userId",
-        totalPhotos = 0,
-        totalLikes = 0,
-        portfolioUrl = "portfolioUrl",
-        profileImage = "profileImage",
-        name = "name",
-        location = "Mexico",
-        username = "userName"
-    )
 
     @Before
     fun setUp() {

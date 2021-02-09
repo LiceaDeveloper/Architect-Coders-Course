@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.liceadev.domain.Photo
 import com.liceadev.domain.User
+import com.liceadev.testshared.mockedPhoto
 import com.liceadev.usecases.FindPhotoById
 import com.liceadev.usecases.TogglePhotoFavorite
 import com.nhaarman.mockitokotlin2.verify
@@ -33,29 +34,6 @@ class DetailViewModelTest {
     lateinit var observer: Observer<DetailViewModel.UiModel>
 
     private lateinit var vm: DetailViewModel
-
-    private val mockedPhoto by lazy {
-        Photo(
-            id = 0,
-            description = "description",
-            likes = 0,
-            urlFull = "urlFull",
-            urlThumb = "urlThumb",
-            user = mockedUser,
-            favorite = false
-        )
-    }
-
-    private val mockedUser = User(
-        userId = "userId",
-        totalPhotos = 0,
-        totalLikes = 0,
-        portfolioUrl = "portfolioUrl",
-        profileImage = "profileImage",
-        name = "name",
-        location = "Mexico",
-        username = "userName"
-    )
 
     @Before
     fun setUp() {

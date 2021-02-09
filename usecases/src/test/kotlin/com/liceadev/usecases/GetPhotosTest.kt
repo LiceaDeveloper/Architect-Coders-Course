@@ -2,6 +2,7 @@ package com.liceadev.usecases
 
 import com.liceadev.data.PhotosRepository
 import com.liceadev.domain.Photo
+import com.liceadev.testshared.mockedPhoto
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -19,14 +20,10 @@ class GetPhotosTest {
 
     lateinit var getPhotos: GetPhotos
 
-    @Mock
-    lateinit var mockedPhoto: Photo
-
     @Before
     fun setUp() {
         getPhotos = GetPhotos(photosRepository)
     }
-
 
     @Test
     fun `invoke call photosRepository`() {
