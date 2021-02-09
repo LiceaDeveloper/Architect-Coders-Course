@@ -30,33 +30,8 @@ class PhotosRepositoryTest {
 
     private val apiKey = "1a2b3c4d"
 
-//    private val mockedPhoto by lazy {
-//        Photo(
-//        id = 0,
-//        description = "description",
-//        likes = 0,
-//        urlFull = "urlFull",
-//        urlThumb = "urlThumb",
-//        user = user,
-//        favorite = false
-//    )
-//    }
-
-
     @Mock
     lateinit var mockedPhoto: Photo
-
-//    private val mockedUser = User(
-//        userId = "userId",
-//        totalPhotos = 0,
-//        totalLikes = 0,
-//        portfolioUrl = "portfolioUrl",
-//        profileImage = "profileImage",
-//        name = "name",
-//        location = "Mexico",
-//        username = "userName"
-//    )
-
 
     @Before
     fun setUp() {
