@@ -58,12 +58,12 @@ val dataModule = module {
 
 private val scopesModule = module {
     scope(named<MainFragment>()){
-        viewModel { MainViewModel(get()) }
+        viewModel { MainViewModel(get(), get()) }
         scoped { GetPhotos(get()) }
     }
 
     scope(named<DetailFragment>()) {
-        viewModel { (id: Int) -> DetailViewModel(id, get(), get()) }
+        viewModel { (id: Int) -> DetailViewModel(id, get(), get(), get()) }
         scoped { FindPhotoById(get()) }
         scoped { TogglePhotoFavorite(get()) }
     }

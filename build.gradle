@@ -60,6 +60,10 @@ allprojects {
                 koinTest     : "org.koin:koin-test:$koin_version"
         ]
 
+        androidxTestLibs = [
+                archCoreTesting: 'androidx.arch.core:core-testing:2.1.0'
+        ]
+
         androidTestLibs = [
                 extJunit: 'androidx.test.ext:junit:1.1.2',
                 espresso: 'androidx.test.espresso:espresso-core:3.3.0'

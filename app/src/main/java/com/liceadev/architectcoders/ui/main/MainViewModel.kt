@@ -6,9 +6,13 @@ import com.liceadev.architectcoders.ui.common.Event
 import com.liceadev.architectcoders.ui.common.ScopedViewModel
 import com.liceadev.domain.Photo
 import com.liceadev.usecases.GetPhotos
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val getPhotos: GetPhotos) : ScopedViewModel() {
+class MainViewModel(
+    private val getPhotos: GetPhotos,
+    uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -26,7 +30,7 @@ class MainViewModel(private val getPhotos: GetPhotos) : ScopedViewModel() {
 
     sealed class UiModel {
         object Loading : UiModel()
-        class Content(val photos: List<Photo>) : UiModel()
+        data class Content(val photos: List<Photo>) : UiModel()
         object RequestLocationPermission : UiModel()
     }
 
@@ -34,7 +38,7 @@ class MainViewModel(private val getPhotos: GetPhotos) : ScopedViewModel() {
         _model.value = UiModel.RequestLocationPermission
     }
 
-    fun onPermissionRequested(){
+    fun onPermissionRequested() {
         launch {
             _model.value = UiModel.Loading
             _model.value = UiModel.Content(getPhotos.invoke())
