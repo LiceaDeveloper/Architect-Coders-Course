@@ -2,7 +2,7 @@ package com.liceadev.architectcoders.data.mappers
 
 
 import com.liceadev.domain.User as DomainUser
-import com.liceadev.architectcoders.data.database.User as RoomUser
+import com.liceadev.architectcoders.model.database.User as RoomUser
 
 fun RoomUser.toDomainUser(): DomainUser = DomainUser(
     userId,
