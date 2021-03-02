@@ -1,16 +1,15 @@
 package com.liceadev.architectcoders.ui.common
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 interface Scope : CoroutineScope {
     var job: Job
 
+    val uiDispatcher: CoroutineDispatcher
+
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+        get() = uiDispatcher + job
 
     fun initScope() {
         job = SupervisorJob()
@@ -20,7 +19,8 @@ interface Scope : CoroutineScope {
         job.cancel()
     }
 
-    class ScopeImpl : Scope {
+    class ScopeImpl(override val uiDispatcher: CoroutineDispatcher) : Scope {
         override lateinit var job: Job
+
     }
 }

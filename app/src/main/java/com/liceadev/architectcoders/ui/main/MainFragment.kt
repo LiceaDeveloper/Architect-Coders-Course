@@ -6,27 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.liceadev.architectcoders.R
+import com.liceadev.architectcoders.data.PermissionRequester
 import com.liceadev.architectcoders.databinding.FragmentMainBinding
-import com.liceadev.architectcoders.extensions.app
-import com.liceadev.architectcoders.extensions.getViewModel
-import com.liceadev.architectcoders.model.AndroidPermissionChecker
-import com.liceadev.architectcoders.model.PermissionRequester
-import com.liceadev.architectcoders.model.PlayServicesLocation
-import com.liceadev.architectcoders.model.database.RoomDataSource
-import com.liceadev.architectcoders.model.server.UnsplashDataSource
 import com.liceadev.architectcoders.ui.common.EventObserver
 import com.liceadev.architectcoders.ui.main.MainViewModel.UiModel
-import com.liceadev.data.CountryRepository
-import com.liceadev.data.PhotosRepository
-import com.liceadev.usecases.GetPhotos
+import org.koin.androidx.scope.ScopeFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment() {
-
+class MainFragment : ScopeFragment() {
+    private val viewModel: MainViewModel by viewModel()
     private lateinit var binding: FragmentMainBinding
     private lateinit var adapter: PhotosAdapter
     private lateinit var navController: NavController
@@ -35,8 +27,6 @@ class MainFragment : Fragment() {
         PermissionRequester(requireActivity(), ACCESS_COARSE_LOCATION)
     }
 
-    private lateinit var  component: MainFragmentComponent
-    private val viewModel: MainViewModel by lazy { getViewModel { component.mainViewModel } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +39,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        component = requireContext().app.component.plus(MainFragmentModule())
         navController = view.findNavController()
 
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))

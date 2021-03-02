@@ -9,7 +9,7 @@ class CountryRepository(
 ) {
 
     companion object {
-        private const val DEFAULT_COUNTRY = "Mexico"
+        const val DEFAULT_COUNTRY = "Mexico"
     }
 
 

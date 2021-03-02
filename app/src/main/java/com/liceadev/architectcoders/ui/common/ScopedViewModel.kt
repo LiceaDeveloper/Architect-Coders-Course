@@ -2,8 +2,9 @@ package com.liceadev.architectcoders.ui.common
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 
-abstract class ScopedViewModel : ViewModel(), Scope by Scope.ScopeImpl() {
+abstract class ScopedViewModel(uiDispatcher: CoroutineDispatcher) : ViewModel(), Scope by Scope.ScopeImpl(uiDispatcher) {
 
     init {
         initScope()
