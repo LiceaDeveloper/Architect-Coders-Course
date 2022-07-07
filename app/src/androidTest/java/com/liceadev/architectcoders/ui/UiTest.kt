@@ -46,7 +46,7 @@ class UiTest : KoinTest {
     }
 
     @Test
-    fun clickAMovieNavigatesToDetail() {
+    fun clickNavigatesToDetail() {
         onView(withId(R.id.rvPhotos)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 4,

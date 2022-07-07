@@ -53,14 +53,14 @@ class MainIntegrationTests : AutoCloseKoinTest() {
 
     @Test
     fun `data is loaded from local source when available`() {
-        val fakeLocalMovies = listOf(mockedPhoto.copy(10), mockedPhoto.copy(11))
+        val fakeLocalPhotos = listOf(mockedPhoto.copy(10), mockedPhoto.copy(11))
         val localDataSource = get<LocalDataSource>() as FakeLocalDataSource
-        localDataSource.photos = fakeLocalMovies
+        localDataSource.photos = fakeLocalPhotos
         viewModel.model.observeForever(observer)
 
         viewModel.onPermissionRequested()
 
-        verify(observer).onChanged(MainViewModel.UiModel.Content(fakeLocalMovies))
+        verify(observer).onChanged(MainViewModel.UiModel.Content(fakeLocalPhotos))
     }
 
     @Test
